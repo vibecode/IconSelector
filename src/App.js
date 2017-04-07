@@ -1,11 +1,10 @@
-import React from 'react'
-import Star from './components/Star';
-
+import React, { Component } from 'react';
+import Star from './Star';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
 import clone from 'clone';
 import Icon from 'react-fa';
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,27 +21,34 @@ class App extends React.Component {
         },
         { id: 5, subject: "Fifa admits scandal deters new sponsors", label: "soccer-ball-o", lastUpdated: new Date() },
       ]
-    }
+    };
 
     this.onLabelChange = this.onLabelChange.bind(this);
     this.onRandomLabelAssign = this.onRandomLabelAssign.bind(this);
   }
 
   onLabelChange(id, newLabel) {
-    let newState = clone(this.state);
-    newState.emails.filter(e => e.id === id).forEach(function (e) {
-      e.label = newLabel;
-      e.lastUpdated = new Date();
-    });
+    const newState = clone(this.state);
+
+    newState.emails
+            .filter(email => email.id === id)
+            .forEach(email => {
+              email.label = newLabel;
+              email.lastUpdated = new Date();
+            });
     this.setState(newState);
   }
 
-  onRandomLabelAssign(id, reactEvent) {
-    let newState = clone(this.state);
-    newState.emails.filter(e => e.id === id).forEach(function (e) {
-      e.label = ['check', 'question-circle', 'exclamation-triangle'][Date.now() % 3];
-      e.lastUpdated = new Date();
-    });
+  onRandomLabelAssign(id) {
+    const newState = clone(this.state);
+
+    newState.emails
+            .filter(email => email.id === id)
+            .forEach(email => {
+              email.label = ['check', 'question-circle', 'exclamation-triangle'][Date.now() % 3];
+              email.lastUpdated = new Date();
+            });
+
     this.setState(newState);
   }
 
@@ -72,3 +78,5 @@ class App extends React.Component {
     )
   }
 }
+
+export default App;
