@@ -3,3 +3,14 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+button:focus {
+  outline: none !important;
+}
+
+.container {
+  width: 900px;
+  margin-top: 100px;
+  padding: 20px 0;
+  background-color: antiquewhite;
+}
