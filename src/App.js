@@ -54,27 +54,27 @@ class App extends Component {
 
   render() {
     return (
-        <Grid>
-          {this.state.emails.map(email =>
-              <Row key={"row-" + email.id}>
-                <Col md={1}>
-                  <Star label={email.label} onChange={this.onLabelChange.bind(null, email.id)} />
-                </Col>
-                <Col md={10}>
-                  {email.subject}
+          <Grid>
+            {this.state.emails.map(email =>
+                <Row key={"row-" + email.id}>
+                  <Col md={1}>
+                    <Star label={email.label} onChange={this.onLabelChange.bind(null, email.id)} />
+                  </Col>
+                  <Col md={10}>
+                    {email.subject}
 
-                  <div className="timestamp">
-                    {email.lastUpdated.toISOString()}
-                  </div>
-                </Col>
-                <Col md={1}>
-                  <Button bsSize="large" bsStyle='link' onClick={this.onRandomLabelAssign.bind(null, email.id)}>
-                    <Icon name="random" />
-                  </Button>
-                </Col>
-              </Row>
-          )}
-        </Grid>
+                    <div className="timestamp">
+                      {email.lastUpdated.toGMTString()}
+                    </div>
+                  </Col>
+                  <Col md={1}>
+                    <Button bsSize="large" bsStyle='link' onClick={this.onRandomLabelAssign.bind(null, email.id)}>
+                      <Icon name="random" />
+                    </Button>
+                  </Col>
+                </Row>
+            )}
+          </Grid>
     )
   }
 }
