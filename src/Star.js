@@ -39,7 +39,7 @@ class Star extends Component {
     const nextLabel = this.props.labels[nextLabelIndex];
 
     clearTimeout(this.state.lastClickedTimeoutId);
-    const timeoutId = setTimeout(this.labelClicked2secondsAgo, 2000);
+    const timeoutId = setTimeout(this.labelClicked2SecondsAgo, 2000);
 
     this.setState({
       label: nextLabel,
