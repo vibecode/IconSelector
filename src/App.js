@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Star from './Star';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
-import clone from 'clone';
 import Icon from 'react-fa';
 
 class App extends Component {
@@ -28,53 +27,60 @@ class App extends Component {
   }
 
   onLabelChange(id, newLabel) {
-    const newState = clone(this.state);
+    const { emails } = this.state;
 
-    newState.emails
-            .filter(email => email.id === id)
-            .forEach(email => {
-              email.label = newLabel;
-              email.lastUpdated = new Date();
-            });
-    this.setState(newState);
+    this.setState({
+      emails: emails.map(email => {
+        if (email.id !== id) {
+          return email;
+        }
+
+        return Object.assign({}, email, { label: newLabel, lastUpdated: new Date() });
+      })
+    });
   }
 
   onRandomLabelAssign(id) {
-    const newState = clone(this.state);
+    const { emails } = this.state;
+    const newLabel = ['check', 'question-circle', 'exclamation-triangle'][Date.now() % 3];
 
-    newState.emails
-            .filter(email => email.id === id)
-            .forEach(email => {
-              email.label = ['check', 'question-circle', 'exclamation-triangle'][Date.now() % 3];
-              email.lastUpdated = new Date();
-            });
+    this.setState({
+      emails: emails.map(email => {
+        if (email.id !== id) {
+          return email;
+        }
 
-    this.setState(newState);
+        return Object.assign({}, email, {
+          label: newLabel,
+          lastUpdated: new Date()
+        });
+      })
+    });
   }
 
   render() {
     return (
-          <Grid>
-            {this.state.emails.map(email =>
-                <Row key={"row-" + email.id}>
-                  <Col md={1}>
-                    <Star label={email.label} onChange={this.onLabelChange.bind(null, email.id)} />
-                  </Col>
-                  <Col md={10}>
-                    {email.subject}
+        <Grid>
+          {this.state.emails.map(email =>
+              <Row key={"row-" + email.id}>
+                <Col md={1}>
+                  <Star label={email.label} onChange={this.onLabelChange.bind(null, email.id)} />
+                </Col>
+                <Col md={10}>
+                  {email.subject}
 
-                    <div className="timestamp">
-                      {email.lastUpdated.toGMTString()}
-                    </div>
-                  </Col>
-                  <Col md={1}>
-                    <Button bsSize="large" bsStyle='link' onClick={this.onRandomLabelAssign.bind(null, email.id)}>
-                      <Icon name="random" />
-                    </Button>
-                  </Col>
-                </Row>
-            )}
-          </Grid>
+                  <div className="timestamp">
+                    {email.lastUpdated.toGMTString()}
+                  </div>
+                </Col>
+                <Col md={1}>
+                  <Button bsSize="large" bsStyle='link' onClick={this.onRandomLabelAssign.bind(null, email.id)}>
+                    <Icon name="random" />
+                  </Button>
+                </Col>
+              </Row>
+          )}
+        </Grid>
     )
   }
 }
