@@ -1,6 +1,6 @@
 # Supposed behavior:
 
-* When the icon is missing, clicking it jumps to the next label.
+* When the icon is  empty star, clicking it jumps to the next label.
 * When the icon is present and was clicked within last 2 seconds, clicking it jumps to the next
 icon.
 * When the icon is present and was not clicked within last 2 seconds, clicking turns off the icon
