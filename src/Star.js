@@ -15,9 +15,8 @@ class Star extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.label !== this.state.label) {
-      clearTimeout(this.state.lastClickedTimeoutId);
-      this.setState({ label: newProps.label, lastClickedTimeoutId: null });
+    if (newProps.label !== this.state.label && !this.state.lastClickedTimeoutId) {
+      this.setState({ label: newProps.label });
     }
   }
 
@@ -45,9 +44,8 @@ class Star extends Component {
 
   labelClicked2SecondsAgo() {
     this.setState({ lastClickedTimeoutId: null });
-
     if (this.props.onChange) {
-      this.props.onChange(this.state.label);
+       this.props.onChange(this.state.label);
     }
   }
 
